@@ -1,0 +1,7 @@
+# Fit Cox Proportional Hazard Model
+cox_model = CoxPHFitter()
+cox_model.fit(data, duration_col="months_since_origination", event_col="default_flag")
+
+# Predict survival function
+time_horizon = np.arange(1, 61)
+survival_prob = cox_model.predict_survival_function(X_test, times=time_horizon)
