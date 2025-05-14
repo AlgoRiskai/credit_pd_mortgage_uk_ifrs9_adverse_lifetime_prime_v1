@@ -1,0 +1,15 @@
+# Compute cumulative PDs
+cumulative_pds = 1 - survival_prob.mean(axis=1)
+
+# Compute marginal PDs
+marginal_pds = np.diff(cumulative_pds, prepend=0)
+
+# Store results
+pd_results = pd.DataFrame({
+    "Month": time_horizon,
+    "Survival Probability": survival_prob.mean(axis=1),
+    "Cumulative PD": cumulative_pds,
+    "Marginal PD": marginal_pds
+})
+
+print(pd_results.head(10))
