@@ -1,0 +1,10 @@
+# Assign IFRS 9 Stages
+data["Stage"] = np.where(data["default_flag"] == 1, "Stage 3",
+                         np.where(data["days_past_due"] > 30, "Stage 2", "Stage 1"))
+
+# Adjust PDs based on macro variables
+def macro_adjustment(pd_estimate, gdp_growth, unemployment_rate):
+    macro_factor = 1 + (-0.5 * gdp_growth + 0.8 * unemployment_rate)
+    return np.clip(pd_estimate * macro_factor, 0, 0.25)  # Cap at 25%
+
+data["adjusted_PD"] = data.apply(lambda row: macro_adjustment(row["cumulative_PD"], row["GDP_growth"], row["unemployment_rate"]), axis=1)
