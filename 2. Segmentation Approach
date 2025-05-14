@@ -1,0 +1,12 @@
+# Define segmentation categories
+segments = {
+    "Owner_vs_BTL": ["owner_occupied", "buy_to_let"],
+    "Repayment_vs_IO": ["repayment", "interest_only"],
+    "LTV_bands": ["ltv_below_60", "ltv_60_80", "ltv_80_90", "ltv_above_90"],
+    "Region": ["London", "South_East", "North_West", "Scotland_Wales"],
+    "Vintage": ["pre_2010", "2010_2015", "post_2015"]
+}
+
+# Assign segmentation labels
+for segment, values in segments.items():
+    data[segment] = pd.cut(data["ltv"], bins=[0, 60, 80, 90, 100], labels=values) if segment == "LTV_bands" else data[segment]
