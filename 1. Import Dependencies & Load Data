@@ -8,3 +8,17 @@ from sklearn.impute import SimpleImputer
 from lifelines import CoxPHFitter
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score, confusion_matrix
+
+# Load data (replace with actual filenames)
+loan_data = pd.read_csv("loan_data.csv")  # Loan attributes
+arrears_data = pd.read_csv("arrears_data.csv")  # Arrears history
+macro_data = pd.read_csv("macro_data.csv")  # Economic factors
+
+# Merge datasets
+data = loan_data.merge(arrears_data, on="loan_id").merge(macro_data, on="date")
+
+# Define target variable (default indicator)
+data["default_flag"] = data["days_past_due"].apply(lambda x: 1 if x > 90 else 0)
+
+# Define time-to-default
+data["months_since_origination"] = np.random.randint(1, 60, data.shape[0])  # Example synthetic data
