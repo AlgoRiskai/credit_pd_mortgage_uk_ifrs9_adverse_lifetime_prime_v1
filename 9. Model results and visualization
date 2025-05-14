@@ -1,0 +1,12 @@
+# Plot PD trends
+plt.figure(figsize=(10, 6))
+
+plt.plot(pd_results["Month"], pd_results["Cumulative PD"], label="Cumulative PD", linestyle="--", color="blue")
+plt.plot(pd_results["Month"], pd_results["Marginal PD"], label="Marginal PD", linestyle="-", color="green")
+
+plt.xlabel("Months Since Origination")
+plt.ylabel("Probability of Default")
+plt.title("Lifetime PD Projection (60 Months)")
+plt.legend()
+plt.grid()
+plt.show()
